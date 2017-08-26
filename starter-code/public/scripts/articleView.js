@@ -139,17 +139,7 @@ articleView.initAdminPage = function() {
   // Make sure you assign the result of your Handlebars.compile call to a variable called "template", since
   // we are then calling "template" on line 117.
 
-    var template = Handlebars.compile($('#blog-stats-template').text());
-
-    this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
-    this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
-    this.body = marked(this.body);
-
-    return template(this);
-  };
-
-
-
+var template = Handlebars.compile($('#blog-stats-template').text());
 
   // REVIEW: We use `forEach` here because we are relying on the side-effects of the callback function:
   // appending to the DOM.
