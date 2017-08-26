@@ -4,7 +4,7 @@ var app = app || {};
 // REVIEW: Check out all of the functions that we've cleaned up with arrow function syntax.
 
 (function(module) {
-  // TODO: Wrap the contents of this file, except for the preceding 'use strict' and 'var app...' declararions, in an IIFE.
+  // DONE: Wrap the contents of this file, except for the preceding 'use strict' and 'var app...' declararions, in an IIFE.
   // Give the IIFE a parameter called 'module'.
   // At the very end of the code, but still inside the IIFE, attach the 'Article' object to 'module'.
   // Where the IIFE is invoked, pass in the global 'app' object that is defined above.
@@ -28,9 +28,9 @@ var app = app || {};
   Article.prototype.toHtml = function() {
     var template = Handlebars.compile($('#article-template').text());
 
-    // this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
-    // this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
-    // this.body = marked(this.body);
+    this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
+    this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
+    this.body = marked(this.body);
 
     return template(this);
   };
@@ -42,7 +42,7 @@ var app = app || {};
     // is the transformation of one collection into another. Remember that we can set variables equal to the result
     // of functions. So if we set a variable equal to the result of a .map, it will be our transformed array.
     // There is no need to push to anything.
-
+Article.all = rows.map(ele => new Article(ele));
     /* OLD forEach():
     rawData.forEach(function(ele) {
     Article.all.push(new Article(ele));
@@ -61,12 +61,12 @@ Article.fetchAll = callback => {
   )
 };
 
-// TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
+// DONE: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = () => {
   return Article.all.map(currentArticle => currentArticle.body.split(' ').length).reduce((acc, current) => acc + current );
 };
 
-// TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
+// DONE: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
 // probably need to use the optional accumulator argument in your reduce call.
 Article.allAuthors = () => {
   return Article.all.map(article => article.author).reduce((names, name) => { if(!names.includes(name))names.push(name); return names }, []);
@@ -74,7 +74,7 @@ Article.allAuthors = () => {
 
 Article.numWordsByAuthor = () => {
   return Article.allAuthors().map(author => {
-    // TODO: Transform each author string into an object with properties for
+    // DONE: Transform each author string into an object with properties for
     // the author's name, as well as the total number of words across all articles
     // written by the specified author.
     // HINT: This .map should be setup to return an object literal with two properties.
