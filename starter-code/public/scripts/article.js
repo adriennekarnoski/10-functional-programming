@@ -28,9 +28,9 @@ var app = app || {};
   Article.prototype.toHtml = function() {
     var template = Handlebars.compile($('#article-template').text());
 
-    // this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
-    // this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
-    // this.body = marked(this.body);
+    this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
+    this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
+    this.body = marked(this.body);
 
     return template(this);
   };
@@ -42,7 +42,7 @@ var app = app || {};
     // is the transformation of one collection into another. Remember that we can set variables equal to the result
     // of functions. So if we set a variable equal to the result of a .map, it will be our transformed array.
     // There is no need to push to anything.
-Article.all = rawData.map(ele => new Article(ele));
+Article.all = rows.map(ele => new Article(ele));
     /* OLD forEach():
     rawData.forEach(function(ele) {
     Article.all.push(new Article(ele));
